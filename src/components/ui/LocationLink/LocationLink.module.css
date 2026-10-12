@@ -1,0 +1,20 @@
+.link,
+.pending {
+  font-family: var(--font-label);
+  font-size: var(--font-size-sm);
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+.link {
+  color: var(--color-accent);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.link:hover {
+  color: var(--color-text);
+}
+
+.pending {
+  font-style: italic;
+  color: var(--color-text-muted);
+}

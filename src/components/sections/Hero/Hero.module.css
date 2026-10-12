@@ -1,0 +1,162 @@
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: var(--space-6);
+  min-height: 100svh;
+  padding: calc(var(--page-gutter) + var(--space-5)) var(--page-gutter) var(--space-6);
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--color-surface-soft) 0%, transparent 65%),
+    var(--color-background);
+  overflow: hidden;
+}
+
+/* Marco fino dorado que recorre el contorno de la portada */
+.frame {
+  position: absolute;
+  inset: var(--space-3);
+  z-index: var(--z-decoration);
+  border: var(--border-thin);
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: var(--z-content);
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  gap: var(--space-7);
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin-inline: auto;
+}
+
+.text {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  max-width: var(--reading-max-width);
+  text-align: center;
+}
+
+.intro {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+.occasion {
+  font-family: var(--font-label);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+  text-wrap: balance;
+  color: var(--color-accent);
+}
+
+.name {
+  margin-block: var(--space-2);
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-light);
+  font-style: italic;
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.divider {
+  margin-block: var(--space-2);
+}
+
+.date {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  color: var(--color-text);
+}
+
+.photo {
+  width: var(--hero-photo-width);
+}
+
+/* Doble marco: borde dorado separado de la foto por un margen crema */
+.photoFrame {
+  aspect-ratio: var(--hero-photo-ratio);
+  padding: var(--space-3);
+  border: var(--border-thin);
+  border-radius: var(--radius-arch);
+  background-color: var(--color-background);
+  box-shadow: var(--shadow-frame);
+}
+
+.scrollCue {
+  position: relative;
+  z-index: var(--z-content);
+  display: inline-grid;
+  justify-items: center;
+  gap: var(--space-2);
+  justify-self: center;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-label);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-text-muted);
+  transition: color var(--duration-base) var(--ease-standard);
+}
+
+.scrollCue:hover {
+  color: var(--color-accent);
+}
+
+.scrollIcon {
+  width: var(--space-4);
+  height: var(--space-5);
+  fill: none;
+  stroke: var(--color-gold);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: float var(--duration-slow) var(--ease-standard) infinite alternate;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(var(--space-2));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollIcon {
+    animation: none;
+  }
+}
+
+@media (min-width: 64em) {
+  .content {
+    grid-template-columns: 1.1fr 1fr;
+    gap: var(--space-8);
+  }
+
+  .text {
+    justify-items: start;
+    text-align: start;
+  }
+
+  .divider {
+    margin-inline: 0;
+  }
+
+  /* En pantallas bajas la foto se reduce para dejar visible el indicador */
+  .photo {
+    justify-self: center;
+    width: min(var(--hero-photo-width), 55svh);
+  }
+}

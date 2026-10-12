@@ -1,0 +1,47 @@
+.section {
+  padding-block: var(--section-padding-block);
+  padding-inline: var(--page-gutter);
+}
+
+.surface {
+  background-color: var(--color-surface-soft);
+}
+
+.inner {
+  max-width: var(--content-max-width);
+  margin-inline: auto;
+}
+
+.header {
+  display: grid;
+  gap: var(--space-4);
+  margin-bottom: var(--space-7);
+  text-align: center;
+}
+
+.eyebrow {
+  font-family: var(--font-label);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.intro {
+  max-width: var(--reading-max-width);
+  margin-inline: auto;
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+}
+
+/* Sin contenido adicional, el encabezado no necesita margen inferior */
+.header:last-child {
+  margin-bottom: 0;
+}

@@ -1,0 +1,28 @@
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  width: min(100%, 14rem);
+  margin-inline: auto;
+  color: var(--color-gold);
+}
+
+.line {
+  flex: 1;
+  height: var(--border-width-thin);
+  background-color: currentColor;
+}
+
+.ornament {
+  width: var(--space-7);
+  height: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+}
+
+.ornament circle {
+  fill: currentColor;
+  stroke: none;
+}

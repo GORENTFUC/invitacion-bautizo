@@ -1,0 +1,113 @@
+/*
+ * Sistema de diseño: fuente única de verdad para los valores visuales.
+ * Los componentes consumen estas variables con var(--nombre).
+ */
+
+:root {
+  /* ---------- Paleta oficial (no modificar sin autorización) ---------- */
+  --palette-cream: #f2edeb;
+  --palette-sand: #d9c6ba;
+  --palette-gold: #bfa980;
+  --palette-rose: #8c4250;
+  --palette-umber: #591e11;
+
+  /* ---------- Colores semánticos ---------- */
+  --color-background: var(--palette-cream);
+  --color-surface: var(--palette-sand);
+  --color-gold: var(--palette-gold);
+  --color-accent: var(--palette-rose);
+  --color-text: var(--palette-umber);
+  /* Texto secundario: mezcla del texto con el fondo, mantiene contraste AA */
+  --color-text-muted: color-mix(in srgb, var(--palette-umber) 80%, var(--palette-cream));
+  /* Superficie translúcida para capas sobre el fondo crema */
+  --color-surface-soft: color-mix(in srgb, var(--palette-sand) 40%, var(--palette-cream));
+  --color-border: var(--palette-gold);
+  --color-focus: var(--palette-rose);
+
+  /* ---------- Tipografía: familias ---------- */
+  /* Cormorant Garamond se usa solo si está instalada; si no, Palatino/Georgia */
+  --font-heading: 'Cormorant Garamond', 'Cormorant', 'Palatino Linotype', Palatino,
+    'Book Antiqua', Georgia, serif;
+  --font-body: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+  --font-label: 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+
+  /* ---------- Tipografía: tamaños (fluidos entre móvil y escritorio) ---------- */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.3rem);
+  --font-size-xl: clamp(1.4rem, 1.2rem + 0.9vw, 1.9rem);
+  --font-size-2xl: clamp(1.9rem, 1.5rem + 1.8vw, 2.9rem);
+  --font-size-display: clamp(3rem, 2.2rem + 4.2vw, 5.75rem);
+
+  /* ---------- Tipografía: pesos, interlineado, tracking ---------- */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  --line-height-tight: 1.1;
+  --line-height-heading: 1.25;
+  --line-height-body: 1.65;
+
+  --letter-spacing-tight: -0.01em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.12em;
+  --letter-spacing-wider: 0.28em;
+
+  /* ---------- Escala de espaciado (base 4px) ---------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* ---------- Dimensiones de layout ---------- */
+  --content-max-width: 72rem;
+  --reading-max-width: 38rem;
+  --page-gutter: clamp(var(--space-4), 5vw, var(--space-7));
+  --section-padding-block: clamp(var(--space-8), 10vw, var(--space-9));
+
+  /* ---------- Imágenes ---------- */
+  --hero-photo-width: min(82%, 26rem);
+  --hero-photo-ratio: 4 / 5;
+  --gallery-photo-ratio: 3 / 4;
+
+  /* ---------- Bordes ---------- */
+  --border-width-thin: 1px;
+  --border-width-thick: 2px;
+  --border-thin: var(--border-width-thin) solid var(--color-border);
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.75rem;
+  --radius-arch: 999px 999px var(--radius-sm) var(--radius-sm);
+  --radius-full: 999px;
+
+  /* ---------- Sombras (discretas, tono cálido) ---------- */
+  --shadow-soft: 0 0.5rem 1.5rem color-mix(in srgb, var(--palette-umber) 10%, transparent);
+  --shadow-frame: 0 1.25rem 3rem color-mix(in srgb, var(--palette-umber) 14%, transparent);
+
+  /* ---------- Movimiento ---------- */
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 1800ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ---------- Capas de apilamiento ---------- */
+  --z-base: 0;
+  --z-decoration: 1;
+  --z-content: 2;
+
+  /*
+   * ---------- Puntos de quiebre (referencia) ----------
+   * Las variables CSS no funcionan dentro de @media, así que los módulos
+   * usan estos valores literales:
+   *   tablet:     40em  (640px)
+   *   escritorio: 64em  (1024px)
+   */
+}
