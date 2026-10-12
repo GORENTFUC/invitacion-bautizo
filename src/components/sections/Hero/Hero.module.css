@@ -80,6 +80,12 @@
 .photo {
   width: var(--hero-photo-width);
 }
+.photoImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-arch);
+}
 
 /* Doble marco: borde dorado separado de la foto por un margen crema */
 .photoFrame {

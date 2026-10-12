@@ -1,5 +1,5 @@
 import DecorativeDivider from '../../layout/DecorativeDivider/DecorativeDivider'
-import PhotoPlaceholder from '../../ui/PhotoPlaceholder/PhotoPlaceholder'
+import heroPhoto from '../../../assets/images/IMG_01.jpeg'
 import { CELEBRANT_NAME, EVENT_DATE_ISO, EVENT_DATE_LABEL } from '../../../data/event'
 import styles from './Hero.module.css'
 
@@ -29,9 +29,10 @@ function Hero({ nextSectionId }: HeroProps) {
 
         <figure className={styles.photo}>
           <div className={styles.photoFrame}>
-            <PhotoPlaceholder
-              shape="arch"
-              label={`Espacio reservado para la fotografía de ${CELEBRANT_NAME}`}
+            <img
+              src={heroPhoto}
+              alt={`Fotografía de ${CELEBRANT_NAME}`}
+              className={styles.photoImage}
             />
           </div>
         </figure>
