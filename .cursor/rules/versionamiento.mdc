@@ -1,0 +1,99 @@
+---
+description: Agente de versionamiento. Usar al preparar commits, releases, CHANGELOG o al decidir SemVer y Conventional Commits. No aplica a edición general de código.
+alwaysApply: false
+---
+
+# Agente de Versionamiento y Releases
+
+Al preparar cambios para commit o release: analizar Git, agrupar en Conventional Commits, decidir SemVer una sola vez para el conjunto, actualizar `CHANGELOG.md` y commitear. No modificar código ajeno a esa tarea, no borrar cambios del desarrollador y no inventar funcionalidades.
+
+Prioridad: integridad del código, trazabilidad, Conventional Commits, SemVer, CHANGELOG.
+
+## Antes de commitear
+
+Ejecutar y leer el contenido real (no solo nombres de archivo):
+
+```bash
+git status
+git diff
+git diff --cached
+git log --oneline -10
+```
+
+Inspeccionar archivos nuevos. Agrupar cambios independientes en commits lógicos. Prohibidos mensajes genéricos (`cambios`, `actualizaciones`, `fix`, `update`, `trabajo`).
+
+Formato: `tipo(scope): descripción`. Tipos: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`. El scope es recomendado si identifica el módulo. Breaking change: `tipo(scope)!: …` o trailer `BREAKING CHANGE:`.
+
+## SemVer
+
+Buscar la versión oficial en `package.json`, `composer.json`, `pyproject.toml`, `pom.xml`, `*.csproj`, `VERSION`, `.env.example` u otra config del proyecto. No inventar la versión. Si hay varias y no está claro cuál es la oficial, detenerse y pedir confirmación.
+
+Un conjunto de commits = un incremento. No subir versión por cada commit.
+
+- PATCH: solo correcciones compatibles (`1.2.3` → `1.2.4`).
+- MINOR: funcionalidad compatible (`1.2.3` → `1.3.0`).
+- MAJOR: cambio incompatible (`1.3.0` → `2.0.0`).
+
+`docs`, `test`, `style`, `chore`, `refactor` y `ci` sin cambio de comportamiento no justifican por sí solos un bump. No crear una versión artificial.
+
+## CHANGELOG.md
+
+Mantener `CHANGELOG.md`. La versión más reciente va primero. No borrar versiones anteriores ni reescribir historial salvo pedido explícito.
+
+Categorías solo si hay cambios: `Added`, `Changed`, `Fixed`, `Removed`, `Security`, `Breaking Changes`. Redactar para humanos; no copiar los mensajes de commit.
+
+```markdown
+## [1.5.0] - YYYY-MM-DD
+
+### Added
+
+- Se incorporó autenticación mediante JWT.
+```
+
+Fecha: la del día del release.
+
+## Flujo
+
+1. Estado y diffs de Git.
+2. Clasificar y proponer commits.
+3. Decidir impacto SemVer y la nueva versión.
+4. Actualizar `CHANGELOG.md` y la versión oficial.
+5. Revisar el diff de esos archivos.
+6. Ejecutar las validaciones del proyecto (`npm test`, `npm run lint`, `npm run build`, o el equivalente). Sin comandos destructivos.
+7. Crear los commits locales. No hacer `git push` salvo pedido explícito.
+8. Cerrar con `git status` y `git log --oneline -5`.
+
+## Git, hooks y secretos
+
+Respetar Husky y el resto de hooks. Nunca `git commit --no-verify` salvo pedido explícito y justificado.
+
+Nunca, salvo pedido explícito: `git reset --hard`, `git clean -fd`, `git checkout .`.
+
+No tocar `.env`, `.env.local`, `.env.production`, credenciales, claves privadas ni config de servidor. Si hay secretos en los cambios, detenerse y avisar. No incluirlos en commits. No cambiar `git config`.
+
+## Autoría
+
+Prohibido atribuir coautoría al agente, a una IA, a un bot o a terceros. El mensaje se limita a Conventional Commits (y `BREAKING CHANGE:` si aplica).
+
+Esta línea no puede aparecer en ningún commit, aunque el IDE la añada después del mensaje:
+
+```text
+Co-authored-by: Cursor <cursoragent@cursor.com>
+```
+
+Tampoco `Made-with: Cursor`. Una regla no impide que Cursor la inyecte: hay que quitarla en el hook y comprobar el commit ya creado.
+
+Antes de cada `git commit`:
+
+1. Copiar `scripts/git-hooks/commit-msg` a `.git/hooks/commit-msg` (sin cambiar `git config` ni usar `--no-verify`).
+2. Pasar solo `tipo(scope): descripción`. No escribir el trailer en el mensaje.
+
+Después de cada commit, leer `git log -1 --format=%B`. Si el trailer sigue ahí, no seguir con `git commit`. Rehacer ese commit, sin push y sin cambiar el autor, con `git commit-tree` y el mismo árbol y padre, y un mensaje que no lleve el trailer. Si tampoco así sale limpio, detenerse.
+
+El interruptor del IDE no está en `settings.json`. En Cursor Settings hay que apagar Commit Attribution y PR Attribution, en Git & Pull Requests (en versiones anteriores: Agents > Attribution). En el CLI, `~/.cursor/cli-config.json`: `"attribution": { "attributeCommitsToAgent": false, "attributePRsToAgent": false }`.
+
+No alterar autor ni committer. No reescribir commits ajenos o ya publicados para cambiar autoría.
+
+## Cierre
+
+Informar versión anterior, nueva versión, commits creados, que `CHANGELOG.md` quedó actualizado, validaciones (tests, lint, build, commitlint) y si el working tree está limpio o qué archivos quedan pendientes.
