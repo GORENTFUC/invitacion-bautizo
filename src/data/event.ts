@@ -10,14 +10,14 @@ export const EVENT_START = new Date('2026-11-01T14:00:00-05:00')
 
 export const BAPTISM: EventVenue = {
   title: 'Bautizo',
-  time: '2:00 p. m.',
+  time: '9:00 a. m.',
   place: 'Iglesia del Rosario',
   city: 'Garzón, Huila',
 }
 
 export const BIRTHDAY: EventVenue = {
   title: 'Primer cumpleaños',
-  time: '5:00 p. m.',
-  place: 'Casa de Orfa',
+  time: '3:00 p. m.',
+  place: 'Carrera 12 # 5 - 21, Br El Rosario',
   city: 'Garzón, Huila',
 }
