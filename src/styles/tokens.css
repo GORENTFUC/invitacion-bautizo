@@ -102,6 +102,7 @@
   --z-base: 0;
   --z-decoration: 1;
   --z-content: 2;
+  --z-floating: 20;
 
   /*
    * ---------- Puntos de quiebre (referencia) ----------

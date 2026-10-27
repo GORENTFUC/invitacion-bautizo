@@ -1,0 +1,245 @@
+.player {
+  /* El disco y la card comparten la misma altura. */
+  --disc-size: 4.15rem;
+  --disc-overlap: calc(var(--disc-size) * 0.3);
+
+  position: fixed;
+  z-index: var(--z-floating);
+  left: max(var(--space-3), env(safe-area-inset-left));
+  bottom: max(var(--space-3), env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  padding-left: calc(var(--disc-size) - var(--disc-overlap));
+  pointer-events: none;
+}
+
+.platter {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  z-index: 1;
+  width: var(--disc-size);
+  height: var(--disc-size);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.disc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: repeating-radial-gradient(
+    circle at 50% 50%,
+    #2a201c 0 0.45px,
+    #120d0b 1.2px 2.1px,
+    #3b2c26 2.7px 3px
+  );
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--palette-gold) 70%, transparent),
+    inset 0 0 0.85rem color-mix(in srgb, black 35%, transparent),
+    0 0.4rem 0.8rem color-mix(in srgb, var(--palette-umber) 28%, transparent);
+  animation: spin 4.8s linear infinite;
+  animation-play-state: paused;
+}
+
+.player[data-state='playing'] .disc {
+  animation-play-state: running;
+}
+
+.label {
+  position: absolute;
+  inset: 26%;
+  border-radius: var(--radius-full);
+  background:
+    radial-gradient(
+      circle at 32% 28%,
+      color-mix(in srgb, var(--palette-sand) 75%, white),
+      transparent 42%
+    ),
+    radial-gradient(circle at 50% 50%, var(--palette-rose) 0%, var(--palette-umber) 78%);
+  box-shadow:
+    0 0 0 1.5px var(--palette-gold),
+    inset 0 0 0 0.22rem color-mix(in srgb, var(--palette-gold) 26%, transparent);
+}
+
+.hole {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: 0.28rem;
+  height: 0.28rem;
+  border-radius: var(--radius-full);
+  background: var(--palette-cream);
+  box-shadow:
+    0 0 0 0.12rem var(--palette-cream),
+    0 0 0 0.18rem var(--palette-gold);
+  transform: translate(-50%, -50%);
+}
+
+.sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-full);
+  background: linear-gradient(
+    118deg,
+    transparent 36%,
+    color-mix(in srgb, white 22%, transparent) 48%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+.card {
+  pointer-events: auto;
+  position: relative;
+  z-index: 0;
+  display: grid;
+  align-content: center;
+  gap: 0.2rem;
+  width: min(10.5rem, calc(100vw - 2 * var(--space-4) - var(--disc-size) + var(--disc-overlap)));
+  height: var(--disc-size);
+  margin: 0;
+  padding: 0.35rem 0.65rem 0.35rem calc(var(--disc-overlap) + 0.55rem);
+  border: var(--border-thin);
+  border-radius: 0.9rem;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, white 55%, var(--palette-cream)),
+      var(--palette-cream)
+    );
+  box-shadow: var(--shadow-frame);
+  color: var(--color-text);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  user-select: none;
+}
+
+.player[data-state='idle'] .card {
+  animation: invite 2.4s var(--ease-standard) infinite alternate;
+}
+
+.card:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.meta {
+  display: grid;
+  gap: 0.02rem;
+  min-width: 0;
+}
+
+.song {
+  overflow: hidden;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-style: italic;
+  line-height: var(--line-height-tight);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.artist {
+  overflow: hidden;
+  font-family: var(--font-label);
+  font-size: 0.5rem;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.progress {
+  display: block;
+  width: 100%;
+  height: 0.14rem;
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--palette-sand) 70%, var(--palette-cream));
+  overflow: hidden;
+}
+
+.progress::after {
+  content: '';
+  display: block;
+  width: var(--progress, 0%);
+  height: 100%;
+  border-radius: inherit;
+  background: var(--palette-rose);
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+}
+
+.playIcon {
+  display: grid;
+  place-items: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--palette-sand) 45%, var(--palette-cream));
+  color: var(--palette-umber);
+}
+
+.playIcon svg {
+  width: 0.58rem;
+  height: 0.58rem;
+  fill: currentColor;
+}
+
+.playIcon[data-playing='false'] svg {
+  margin-left: 0.06rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes invite {
+  from {
+    box-shadow: var(--shadow-soft);
+  }
+
+  to {
+    box-shadow:
+      0 0 0 0.22rem color-mix(in srgb, var(--palette-gold) 28%, transparent),
+      var(--shadow-frame);
+  }
+}
+
+@media (min-width: 40em) {
+  .player {
+    --disc-size: 4.5rem;
+  }
+
+  .card {
+    width: 11.25rem;
+    padding: 0.4rem 0.75rem 0.4rem calc(var(--disc-overlap) + 0.65rem);
+  }
+
+  .song {
+    font-size: 0.9rem;
+  }
+
+  .artist {
+    font-size: 0.52rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .player[data-state='idle'] .card,
+  .disc {
+    animation: none;
+  }
+}

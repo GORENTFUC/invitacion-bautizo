@@ -1,4 +1,5 @@
 import Hero from './components/sections/Hero/Hero'
+import MusicPlayer from './components/ui/MusicPlayer/MusicPlayer'
 import OurStory from './components/sections/OurStory/OurStory'
 import Baptism from './components/sections/Baptism/Baptism'
 import Birthday from './components/sections/Birthday/Birthday'
@@ -10,6 +11,7 @@ import Footer from './components/sections/Footer/Footer'
 function App() {
   return (
     <>
+      <MusicPlayer />
       <Hero nextSectionId="nuestra-historia" />
       <main>
         <OurStory />
