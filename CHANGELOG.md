@@ -2,6 +2,12 @@
 
 Todas las modificaciones importantes de este proyecto deben documentarse en este archivo.
 
+## [0.2.0] - 2026-10-27
+
+### Added
+
+- Reproductor flotante con la canción de la invitación, progreso y control de reproducción.
+
 ## [0.1.0] - 2026-10-22
 
 ### Added
