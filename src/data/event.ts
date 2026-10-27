@@ -23,3 +23,13 @@ export const BIRTHDAY: EventVenue = {
   city: 'Garzón, Huila',
   mapUrl: 'https://maps.app.goo.gl/zUrB8gDU7Arcx2tt7',
 }
+
+/* Colombia (+57). Solo dígitos, sin espacios ni signos. */
+export const WHATSAPP_PHONE = '573232109278'
+
+export const WHATSAPP_RSVP_MESSAGE =
+  `Hola, confirmo mi asistencia al bautizo y primer año de vida de ${CELEBRANT_NAME} el ${EVENT_DATE_LABEL}.`
+
+export function getWhatsAppRsvpUrl(): string {
+  return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(WHATSAPP_RSVP_MESSAGE)}`
+}

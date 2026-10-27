@@ -3,6 +3,11 @@
   gap: var(--space-5);
   padding: 0;
   list-style: none;
+  justify-items: center;
+}
+
+.list > * {
+  width: min(100%, 28rem);
 }
 
 .card {
@@ -23,17 +28,65 @@
   color: var(--color-text-muted);
 }
 
-.pending {
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-6);
+  border: var(--border-width-thin) solid var(--color-gold);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-accent);
+  box-shadow: var(--shadow-soft);
   font-family: var(--font-label);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   letter-spacing: var(--letter-spacing-wide);
   text-transform: uppercase;
-  color: var(--color-text-muted);
+  text-decoration: none;
+  color: var(--color-background);
+  transition:
+    background-color var(--duration-base) var(--ease-standard),
+    border-color var(--duration-base) var(--ease-standard),
+    box-shadow var(--duration-base) var(--ease-standard),
+    transform var(--duration-base) var(--ease-standard);
+}
+
+.buttonIcon {
+  flex-shrink: 0;
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: currentColor;
+}
+
+.button:hover {
+  background-color: var(--color-text);
+  border-color: var(--color-text);
+  box-shadow: var(--shadow-frame);
+  transform: translateY(-0.125rem);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+
+  .button:hover {
+    transform: none;
+  }
 }
 
 @media (min-width: 64em) {
   .list {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
     gap: var(--space-6);
+    justify-content: center;
   }
 }
