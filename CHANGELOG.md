@@ -2,6 +2,17 @@
 
 Todas las modificaciones importantes de este proyecto deben documentarse en este archivo.
 
+## [0.3.0] - 2026-10-27
+
+### Added
+
+- Confirmación de asistencia por WhatsApp desde la invitación.
+- Enlaces de Google Maps para la iglesia y el lugar de la celebración.
+
+### Changed
+
+- Fecha del evento al domingo 8 de noviembre de 2026 y hora del cumpleaños a la 1:00 p. m.
+
 ## [0.2.0] - 2026-10-27
 
 ### Added
