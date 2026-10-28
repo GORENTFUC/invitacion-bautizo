@@ -2,6 +2,16 @@
 
 Todas las modificaciones importantes de este proyecto deben documentarse en este archivo.
 
+## [0.3.1] - 2026-10-28
+
+### Fixed
+
+- Fecha del 8 de noviembre de 2026 en la imagen de vista previa para redes.
+
+### Changed
+
+- URL pública del sitio para las vistas previas en WhatsApp y Facebook.
+
 ## [0.3.0] - 2026-10-27
 
 ### Added
