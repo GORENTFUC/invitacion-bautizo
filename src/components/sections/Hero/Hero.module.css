@@ -4,12 +4,25 @@
    *  1) Tipografía escala con el ANCHO (vw), no con la altura.
    *  2) Grid: texto auto → foto 1fr → cue auto.
    *  3) La foto SOLO usa el espacio que sobra; nunca empuja ni tapa el cue.
+   *
+   * Padding = safe-area + marco + aire interior (suma, no max).
+   * Así en Safari con notch siempre queda respiro y no se apiña contra el borde.
    */
-  --hero-pad-x: max(var(--space-4), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
-  --hero-pad-top: max(var(--space-5), env(safe-area-inset-top, 0px));
-  --hero-pad-bottom: max(var(--space-6), calc(var(--space-4) + env(safe-area-inset-bottom, 0px)));
-  --hero-stack-gap: var(--space-3);
-  --hero-frame-inset: var(--space-3);
+  --hero-frame-inset: var(--space-4);
+  --hero-inner-gap: var(--space-4);
+  --hero-stack-gap: var(--space-4);
+  --hero-pad-top: calc(
+    env(safe-area-inset-top, 0px) + var(--hero-frame-inset) + var(--hero-inner-gap)
+  );
+  --hero-pad-right: calc(
+    env(safe-area-inset-right, 0px) + var(--hero-frame-inset) + var(--hero-inner-gap)
+  );
+  --hero-pad-bottom: calc(
+    env(safe-area-inset-bottom, 0px) + var(--hero-frame-inset) + var(--hero-inner-gap)
+  );
+  --hero-pad-left: calc(
+    env(safe-area-inset-left, 0px) + var(--hero-frame-inset) + var(--hero-inner-gap)
+  );
 
   /* Escala tipográfica anclada al ancho: misma armonía en anchos similares */
   --hero-intro-size: clamp(1.05rem, 0.92rem + 1.4vw, 1.35rem);
@@ -31,7 +44,7 @@
   height: 100dvh;
   max-height: 100vh;
   max-height: 100dvh;
-  padding: var(--hero-pad-top) var(--hero-pad-x) var(--hero-pad-bottom);
+  padding: var(--hero-pad-top) var(--hero-pad-right) var(--hero-pad-bottom) var(--hero-pad-left);
   background:
     radial-gradient(ellipse at 50% 0%, var(--color-surface-soft) 0%, transparent 65%),
     var(--color-background);
@@ -40,7 +53,10 @@
 
 .frame {
   position: absolute;
-  inset: var(--hero-frame-inset);
+  top: calc(env(safe-area-inset-top, 0px) + var(--hero-frame-inset));
+  right: calc(env(safe-area-inset-right, 0px) + var(--hero-frame-inset));
+  bottom: calc(env(safe-area-inset-bottom, 0px) + var(--hero-frame-inset));
+  left: calc(env(safe-area-inset-left, 0px) + var(--hero-frame-inset));
   z-index: var(--z-decoration);
   border: var(--border-thin);
   border-radius: var(--radius-sm);
@@ -66,7 +82,7 @@
 .text {
   display: grid;
   justify-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
   max-width: min(var(--reading-max-width), 100%);
   text-align: center;
 }
@@ -205,9 +221,9 @@
 /* Pantallas muy bajas: tipografía un poco más contenida; la foto sigue siendo 1fr */
 @media (max-height: 38em) {
   .hero {
-    --hero-pad-top: max(var(--space-3), env(safe-area-inset-top, 0px));
-    --hero-pad-bottom: max(var(--space-5), calc(var(--space-3) + env(safe-area-inset-bottom, 0px)));
-    --hero-stack-gap: var(--space-2);
+    --hero-frame-inset: var(--space-3);
+    --hero-inner-gap: var(--space-3);
+    --hero-stack-gap: var(--space-3);
     --hero-name-size: clamp(2rem, 1.2rem + 5vw, 2.85rem);
     --hero-intro-size: clamp(0.95rem, 0.85rem + 1vw, 1.15rem);
     --hero-date-size: clamp(1.05rem, 0.9rem + 1.2vw, 1.35rem);
@@ -215,7 +231,7 @@
   }
 
   .text {
-    gap: var(--space-1);
+    gap: var(--space-2);
   }
 
   .photoFrame {
@@ -226,8 +242,8 @@
 /* Landscape bajo: texto | foto en fila; cue debajo a todo el ancho */
 @media (orientation: landscape) and (max-height: 40em) {
   .hero {
-    --hero-pad-top: max(var(--space-3), env(safe-area-inset-top, 0px));
-    --hero-pad-bottom: max(var(--space-4), calc(var(--space-3) + env(safe-area-inset-bottom, 0px)));
+    --hero-frame-inset: var(--space-3);
+    --hero-inner-gap: var(--space-3);
     --hero-photo-cap: 18rem;
   }
 
@@ -255,10 +271,9 @@
 /* Escritorio / tablets anchas */
 @media (min-width: 64em) {
   .hero {
-    --hero-pad-top: max(var(--space-6), env(safe-area-inset-top, 0px));
-    --hero-pad-bottom: max(var(--space-7), calc(var(--space-5) + env(safe-area-inset-bottom, 0px)));
+    --hero-frame-inset: var(--space-5);
+    --hero-inner-gap: var(--space-5);
     --hero-stack-gap: var(--space-5);
-    --hero-frame-inset: var(--space-4);
     --hero-intro-size: clamp(1.2rem, 1rem + 0.6vw, 1.5rem);
     --hero-occasion-size: clamp(0.8rem, 0.7rem + 0.35vw, 0.95rem);
     --hero-name-size: clamp(3.25rem, 2rem + 3.5vw, 5.75rem);
