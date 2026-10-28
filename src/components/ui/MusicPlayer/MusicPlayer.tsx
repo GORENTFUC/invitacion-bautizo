@@ -188,7 +188,7 @@ function MusicPlayer({ hideWhileId = 'portada' }: MusicPlayerProps) {
           </span>
         </span>
       </button>
-      <audio ref={audioRef} src={TRACK_SRC} preload="auto" loop />
+      <audio ref={audioRef} src={TRACK_SRC} preload="metadata" loop />
     </div>
   )
 }

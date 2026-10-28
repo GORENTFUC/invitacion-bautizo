@@ -163,7 +163,7 @@
 .song {
   overflow: hidden;
   font-family: var(--font-heading);
-  font-size: 0.82rem;
+  font-size: 0.72rem;
   font-style: italic;
   line-height: var(--line-height-tight);
   text-overflow: ellipsis;
@@ -173,7 +173,7 @@
 .artist {
   overflow: hidden;
   font-family: var(--font-label);
-  font-size: 0.5rem;
+  font-size: 0.45rem;
   font-weight: var(--font-weight-medium);
   letter-spacing: var(--letter-spacing-wide);
   text-transform: uppercase;
@@ -254,11 +254,11 @@
   }
 
   .song {
-    font-size: 0.9rem;
+    font-size: 0.78rem;
   }
 
   .artist {
-    font-size: 0.52rem;
+    font-size: 0.48rem;
   }
 }
 
