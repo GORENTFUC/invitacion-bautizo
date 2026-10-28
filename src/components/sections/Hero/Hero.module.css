@@ -1,10 +1,31 @@
 .hero {
+  /*
+   * Portada a viewport completo.
+   * Escala hacia abajo en pantallas bajas y hacia arriba en tablets/monitores
+   * (svh + techos altos en rem), sin dejar el contenido “enano”.
+   */
+  --hero-pad-block: clamp(var(--space-3), 2.2svh, calc(var(--page-gutter) + var(--space-5)));
+  --hero-pad-inline: clamp(var(--space-3), 4vw, var(--page-gutter));
+  --hero-gap: clamp(var(--space-2), 1.6svh, var(--space-5));
+  --hero-content-gap: clamp(var(--space-3), 2.4svh, var(--space-8));
+  --hero-photo-max-h: clamp(14rem, 48svh, 34rem);
+  --hero-photo-max-w: min(88%, clamp(16rem, 42svh, 30rem));
+  --hero-intro-size: clamp(1rem, 0.75rem + 1.1svh, 1.65rem);
+  --hero-occasion-size: clamp(0.7rem, 0.55rem + 0.55svh, 1rem);
+  --hero-name-size: clamp(2rem, 1.1rem + 6svh, 6.5rem);
+  --hero-date-size: clamp(1.1rem, 0.85rem + 1.5svh, 2.2rem);
+
   position: relative;
   display: grid;
-  grid-template-rows: 1fr auto;
-  gap: var(--space-6);
-  min-height: 100svh;
-  padding: calc(var(--page-gutter) + var(--space-5)) var(--page-gutter) var(--space-6);
+  box-sizing: border-box;
+  height: 100svh;
+  max-height: 100svh;
+  padding: var(--hero-pad-block) var(--hero-pad-inline);
+  /* Extra aire bajo la flecha para que no quede pegada al marco dorado */
+  padding-bottom: max(
+    calc(var(--hero-pad-block) + var(--space-4)),
+    calc(var(--space-4) + env(safe-area-inset-bottom, 0px))
+  );
   background:
     radial-gradient(ellipse at 50% 0%, var(--color-surface-soft) 0%, transparent 65%),
     var(--color-background);
@@ -14,7 +35,7 @@
 /* Marco fino dorado que recorre el contorno de la portada */
 .frame {
   position: absolute;
-  inset: var(--space-3);
+  inset: clamp(0.4rem, 1.2svh, var(--space-3));
   z-index: var(--z-decoration);
   border: var(--border-thin);
   border-radius: var(--radius-sm);
@@ -24,33 +45,38 @@
 .content {
   position: relative;
   z-index: var(--z-content);
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  justify-content: safe center;
   align-items: center;
-  justify-items: center;
-  gap: var(--space-7);
+  gap: var(--hero-content-gap);
+  min-height: 0;
+  height: 100%;
   width: 100%;
   max-width: var(--content-max-width);
   margin-inline: auto;
+  overflow: hidden;
 }
 
 .text {
+  flex: 0 0 auto;
   display: grid;
   justify-items: center;
-  gap: var(--space-3);
-  max-width: var(--reading-max-width);
+  gap: clamp(var(--space-1), 0.8svh, var(--space-4));
+  max-width: min(var(--reading-max-width), 100%);
   text-align: center;
 }
 
 .intro {
   font-family: var(--font-heading);
-  font-size: var(--font-size-lg);
+  font-size: var(--hero-intro-size);
   font-style: italic;
   color: var(--color-text-muted);
 }
 
 .occasion {
   font-family: var(--font-label);
-  font-size: var(--font-size-sm);
+  font-size: var(--hero-occasion-size);
   font-weight: var(--font-weight-medium);
   letter-spacing: var(--letter-spacing-wider);
   text-transform: uppercase;
@@ -59,8 +85,8 @@
 }
 
 .name {
-  margin-block: var(--space-2);
-  font-size: var(--font-size-display);
+  margin-block: clamp(0, 0.6svh, var(--space-2));
+  font-size: var(--hero-name-size);
   font-weight: var(--font-weight-light);
   font-style: italic;
   line-height: var(--line-height-tight);
@@ -68,18 +94,30 @@
 }
 
 .divider {
-  margin-block: var(--space-2);
+  margin-block: clamp(0, 0.5svh, var(--space-2));
 }
 
 .date {
   font-family: var(--font-heading);
-  font-size: var(--font-size-xl);
+  font-size: var(--hero-date-size);
   color: var(--color-text);
 }
 
+/*
+ * Ancho derivado de la altura objetivo (ratio 4/5) para que crezca en
+ * pantallas grandes y se encoja en las bajas, sin deformar el arco.
+ */
 .photo {
-  width: var(--hero-photo-width);
+  flex: 0 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+  min-height: 0;
+  width: min(var(--hero-photo-max-w), calc(var(--hero-photo-max-h) * 0.8), 100%);
+  max-height: min(var(--hero-photo-max-h), 100%);
 }
+
 .photoImage {
   width: 100%;
   height: 100%;
@@ -89,8 +127,11 @@
 
 /* Doble marco: borde dorado separado de la foto por un margen crema */
 .photoFrame {
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
   aspect-ratio: var(--hero-photo-ratio);
-  padding: var(--space-3);
+  padding: clamp(var(--space-2), 1.1svh, var(--space-4));
   border: var(--border-thin);
   border-radius: var(--radius-arch);
   background-color: var(--color-background);
@@ -100,14 +141,14 @@
 .scrollCue {
   position: relative;
   z-index: var(--z-content);
+  flex: 0 0 auto;
   display: inline-grid;
   justify-items: center;
-  gap: var(--space-2);
-  justify-self: center;
-  padding: var(--space-2) var(--space-3);
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-sm);
   font-family: var(--font-label);
-  font-size: var(--font-size-xs);
+  font-size: clamp(var(--font-size-xs), 0.65rem + 0.35svh, 0.9rem);
   letter-spacing: var(--letter-spacing-wide);
   text-transform: uppercase;
   text-decoration: none;
@@ -120,8 +161,8 @@
 }
 
 .scrollIcon {
-  width: var(--space-4);
-  height: var(--space-5);
+  width: clamp(var(--space-4), 2.2svh, var(--space-5));
+  height: clamp(var(--space-5), 2.8svh, var(--space-6));
   fill: none;
   stroke: var(--color-gold);
   stroke-width: 1.5;
@@ -145,10 +186,32 @@
   }
 }
 
-@media (min-width: 64em) {
+/* Pantallas bajas: comprime sin romper la bienvenida */
+@media (max-height: 40em) {
+  .hero {
+    --hero-photo-max-h: clamp(10rem, 32svh, 16rem);
+    --hero-photo-max-w: min(82%, 18rem);
+    --hero-content-gap: clamp(var(--space-2), 1.4svh, var(--space-4));
+    --hero-name-size: clamp(1.75rem, 1rem + 4.5svh, 3.5rem);
+  }
+}
+
+/* Landscape bajo: texto y foto lado a lado */
+@media (orientation: landscape) and (max-height: 40em) {
+  .hero {
+    --hero-photo-max-h: clamp(12rem, 70svh, 22rem);
+    --hero-photo-max-w: min(90%, 20rem);
+    --hero-content-gap: clamp(var(--space-3), 2svh, var(--space-6));
+  }
+
   .content {
-    grid-template-columns: 1.1fr 1fr;
-    gap: var(--space-8);
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    align-items: center;
+    justify-items: center;
+    column-gap: var(--hero-content-gap);
+    row-gap: var(--hero-gap);
   }
 
   .text {
@@ -160,9 +223,59 @@
     margin-inline: 0;
   }
 
-  /* En pantallas bajas la foto se reduce para dejar visible el indicador */
-  .photo {
-    justify-self: center;
-    width: min(var(--hero-photo-width), 55svh);
+  .scrollCue {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Tablets / Surface / monitores: aprovecha el alto disponible */
+@media (min-height: 48em) {
+  .hero {
+    --hero-photo-max-h: clamp(18rem, 52svh, 38rem);
+    --hero-photo-max-w: min(90%, clamp(18rem, 46svh, 34rem));
+    --hero-name-size: clamp(2.5rem, 1.2rem + 6.5svh, 7rem);
+    --hero-intro-size: clamp(1.15rem, 0.8rem + 1.3svh, 1.85rem);
+    --hero-date-size: clamp(1.25rem, 0.9rem + 1.7svh, 2.4rem);
+  }
+}
+
+@media (min-width: 64em) {
+  .hero {
+    --hero-content-gap: clamp(var(--space-5), 3.2svh, var(--space-8));
+    --hero-photo-max-h: clamp(20rem, 64svh, 42rem);
+    --hero-photo-max-w: min(100%, clamp(18rem, 50svh, 36rem));
+    --hero-name-size: clamp(3rem, 1.4rem + 5vw + 2svh, 7.5rem);
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    align-items: center;
+    justify-items: center;
+    column-gap: var(--hero-content-gap);
+    row-gap: var(--hero-gap);
+  }
+
+  .text {
+    justify-items: start;
+    text-align: start;
+  }
+
+  .divider {
+    margin-inline: 0;
+  }
+
+  .scrollCue {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Monitores / tablets altas: evita la “isla diminuta” en el centro */
+@media (min-height: 56em) and (min-width: 48em) {
+  .hero {
+    --hero-photo-max-h: clamp(22rem, 56svh, 44rem);
+    --hero-photo-max-w: min(92%, clamp(20rem, 48svh, 36rem));
+    --hero-content-gap: clamp(var(--space-5), 3.5svh, var(--space-9));
   }
 }

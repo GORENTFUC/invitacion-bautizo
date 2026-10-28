@@ -4,13 +4,15 @@ import { CELEBRANT_NAME, EVENT_DATE_ISO, EVENT_DATE_LABEL } from '../../../data/
 import styles from './Hero.module.css'
 
 interface HeroProps {
+  /* id de la portada (para ocultar el reproductor mientras esté visible) */
+  id?: string
   /* id de la sección a la que lleva el indicador de desplazamiento */
   nextSectionId: string
 }
 
-function Hero({ nextSectionId }: HeroProps) {
+function Hero({ id = 'portada', nextSectionId }: HeroProps) {
   return (
-    <header className={styles.hero}>
+    <header id={id} className={styles.hero}>
       <div className={styles.frame} aria-hidden="true" />
 
       <div className={styles.content}>
@@ -36,14 +38,14 @@ function Hero({ nextSectionId }: HeroProps) {
             />
           </div>
         </figure>
-      </div>
 
-      <a className={styles.scrollCue} href={`#${nextSectionId}`}>
-        <span>Desliza para descubrir más</span>
-        <svg className={styles.scrollIcon} viewBox="0 0 16 24" aria-hidden="true" focusable="false">
-          <path d="M8 2 V20 M2 14 L8 20 L14 14" />
-        </svg>
-      </a>
+        <a className={styles.scrollCue} href={`#${nextSectionId}`}>
+          <span>Desliza para descubrir más</span>
+          <svg className={styles.scrollIcon} viewBox="0 0 16 24" aria-hidden="true" focusable="false">
+            <path d="M8 2 V20 M2 14 L8 20 L14 14" />
+          </svg>
+        </a>
+      </div>
     </header>
   )
 }
