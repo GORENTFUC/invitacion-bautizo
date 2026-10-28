@@ -2,6 +2,12 @@
 
 Todas las modificaciones importantes de este proyecto deben documentarse en este archivo.
 
+## [0.4.1] - 2026-10-28
+
+### Fixed
+
+- Composición de la portada en móviles: tipografía por ancho, foto en el espacio libre y altura con `dvh`.
+
 ## [0.4.0] - 2026-10-28
 
 ### Added
