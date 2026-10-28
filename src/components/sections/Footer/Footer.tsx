@@ -3,7 +3,7 @@ import LocationLink from '../../ui/LocationLink/LocationLink'
 import {
   BAPTISM,
   BIRTHDAY,
-  CELEBRANT_NAME,
+  CELEBRANT_FULL_NAME,
   EVENT_DATE_ISO,
   EVENT_DATE_LABEL,
 } from '../../../data/event'
@@ -16,7 +16,7 @@ function Footer() {
     <footer className={styles.footer}>
       <DecorativeDivider />
       <p className={styles.thanks}>Gracias por ser parte de este día tan especial</p>
-      <p className={styles.name}>{CELEBRANT_NAME}</p>
+      <p className={styles.name}>{CELEBRANT_FULL_NAME}</p>
       <p className={styles.date}>
         <time dateTime={EVENT_DATE_ISO}>{EVENT_DATE_LABEL}</time>
       </p>
@@ -29,6 +29,8 @@ function Footer() {
           </li>
         ))}
       </ul>
+
+      <DecorativeDivider className={styles.closingDivider} />
     </footer>
   )
 }

@@ -1,6 +1,7 @@
 import type { EventVenue } from '../types/event'
 
 export const CELEBRANT_NAME = 'María Isabel'
+export const CELEBRANT_FULL_NAME = 'María Isabel Quiza Sanchez'
 
 export const EVENT_DATE_LABEL = 'Domingo 8 de noviembre de 2026'
 export const EVENT_DATE_ISO = '2026-11-08'

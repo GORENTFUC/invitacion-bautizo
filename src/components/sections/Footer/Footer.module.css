@@ -46,6 +46,10 @@
   font-size: var(--font-size-lg);
 }
 
+.closingDivider {
+  margin-top: var(--space-5);
+}
+
 @media (min-width: 40em) {
   .locations {
     grid-template-columns: repeat(2, minmax(0, 1fr));
