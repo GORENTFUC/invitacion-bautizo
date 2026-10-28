@@ -2,6 +2,18 @@
 
 Todas las modificaciones importantes de este proyecto deben documentarse en este archivo.
 
+## [0.4.2] - 2026-10-28
+
+### Changed
+
+- Fotografías convertidas a WebP para reducir el peso de la invitación.
+- El audio del reproductor carga solo metadatos al inicio.
+- Tipografía del reproductor un poco más compacta.
+
+### Added
+
+- Script `optimize:images` con Sharp para regenerar las fotografías.
+
 ## [0.4.1] - 2026-10-28
 
 ### Fixed
