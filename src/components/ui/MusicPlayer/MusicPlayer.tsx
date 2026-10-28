@@ -3,21 +3,46 @@ import styles from './MusicPlayer.module.css'
 
 /**
  * El mp3 vive en public/ y se sirve tal cual.
- * Nombre exacto del archivo: public/audio/eres-tu.mp3
+ * Nombre exacto del archivo: public/audio/ojitos-lindos.mp3
  */
-const TRACK_SRC = `${import.meta.env.BASE_URL}audio/eres-tu.mp3`
-const TRACK_TITLE = 'Eres tú'
-const TRACK_ARTIST = 'Carla Morrison'
+const TRACK_SRC = `${import.meta.env.BASE_URL}audio/ojitos-lindos.mp3`
+const TRACK_TITLE = 'Ojitos Lindos'
+const TRACK_ARTIST = 'Magdalena Matthey'
 const TARGET_VOLUME = 0.5
 
 type Playback = 'idle' | 'playing' | 'paused' | 'missing'
 
-function MusicPlayer() {
+interface MusicPlayerProps {
+  /* Mientras este elemento esté mayormente en vista, el player permanece oculto */
+  hideWhileId?: string
+}
+
+function MusicPlayer({ hideWhileId = 'portada' }: MusicPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null)
   const rootRef = useRef<HTMLDivElement>(null)
   const pausedByUser = useRef(false)
   const [playback, setPlayback] = useState<Playback>('idle')
   const [progress, setProgress] = useState(0)
+  const [uiVisible, setUiVisible] = useState(false)
+
+  /* No competir con la bienvenida: aparece solo al salir de la portada */
+  useEffect(() => {
+    const target = document.getElementById(hideWhileId)
+    if (!target) {
+      const frame = requestAnimationFrame(() => setUiVisible(true))
+      return () => cancelAnimationFrame(frame)
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setUiVisible(entry.intersectionRatio < 0.55)
+      },
+      { threshold: [0, 0.25, 0.55, 0.75, 1] },
+    )
+
+    observer.observe(target)
+    return () => observer.disconnect()
+  }, [hideWhileId])
 
   useEffect(() => {
     const audio = audioRef.current
@@ -113,7 +138,13 @@ function MusicPlayer() {
         : `Reproducir ${TRACK_TITLE} de ${TRACK_ARTIST}`
 
   return (
-    <div className={styles.player} ref={rootRef} data-state={playback}>
+    <div
+      className={styles.player}
+      ref={rootRef}
+      data-state={playback}
+      data-visible={uiVisible ? 'true' : 'false'}
+      aria-hidden={uiVisible ? undefined : true}
+    >
       <span className={styles.platter} aria-hidden="true">
         <span className={styles.disc}>
           <span className={styles.label} />
@@ -127,7 +158,8 @@ function MusicPlayer() {
         className={styles.card}
         aria-pressed={isPlaying}
         aria-label={label}
-        disabled={playback === 'missing'}
+        disabled={playback === 'missing' || !uiVisible}
+        tabIndex={uiVisible ? undefined : -1}
         onClick={toggle}
       >
         <span className={styles.meta}>

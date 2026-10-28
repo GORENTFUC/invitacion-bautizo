@@ -11,8 +11,8 @@ import Footer from './components/sections/Footer/Footer'
 function App() {
   return (
     <>
-      <MusicPlayer />
-      <Hero nextSectionId="nuestra-historia" />
+      <MusicPlayer hideWhileId="portada" />
+      <Hero id="portada" nextSectionId="nuestra-historia" />
       <main>
         <OurStory />
         <Baptism />
