@@ -1,5 +1,5 @@
 import DecorativeDivider from '../../layout/DecorativeDivider/DecorativeDivider'
-import heroPhoto from '../../../assets/images/IMG_01.jpeg'
+import heroPhoto from '../../../assets/images/IMG_01.webp'
 import { CELEBRANT_NAME, EVENT_DATE_ISO, EVENT_DATE_LABEL } from '../../../data/event'
 import styles from './Hero.module.css'
 
@@ -35,6 +35,8 @@ function Hero({ id = 'portada', nextSectionId }: HeroProps) {
               src={heroPhoto}
               alt={`Fotografía de ${CELEBRANT_NAME}`}
               className={styles.photoImage}
+              fetchPriority="high"
+              decoding="async"
             />
           </div>
         </figure>
