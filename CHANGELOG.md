@@ -2,6 +2,16 @@
 
 Todas las modificaciones importantes de este proyecto deben documentarse en este archivo.
 
+## [0.4.3] - 2026-10-28
+
+### Fixed
+
+- Márgenes de la portada con safe-area y `viewport-fit=cover` para Safari y notch.
+
+### Changed
+
+- Canción del reproductor a «Eres tú» de Carla Morrison.
+
 ## [0.4.2] - 2026-10-28
 
 ### Changed
