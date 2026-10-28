@@ -77,7 +77,7 @@ $diamond = [System.Drawing.PointF[]]@(
 )
 $g.DrawPolygon($goldPen, $diamond)
 
-Write-Line 'Domingo 1 de noviembre de 2026' (New-Object System.Drawing.Font 'Palatino Linotype', 34, 'Regular', 'Pixel') $umber 430 50
+Write-Line 'Domingo 8 de noviembre de 2026' (New-Object System.Drawing.Font 'Palatino Linotype', 34, 'Regular', 'Pixel') $umber 430 50
 Write-Line (Add-Tracking 'GARZÓN, HUILA') (New-Object System.Drawing.Font 'Segoe UI', 17, 'Regular', 'Pixel') $umberMuted 492 30
 
 $bitmap.Save((Join-Path $publicDir 'og-image.png'), [System.Drawing.Imaging.ImageFormat]::Png)
