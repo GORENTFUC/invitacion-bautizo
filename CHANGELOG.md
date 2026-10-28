@@ -2,6 +2,18 @@
 
 Todas las modificaciones importantes de este proyecto deben documentarse en este archivo.
 
+## [0.4.0] - 2026-10-28
+
+### Added
+
+- Nombre completo de María Isabel en el pie de página, con un divisor de cierre.
+
+### Changed
+
+- Portada adaptada al alto del viewport en pantallas altas, bajas y en horizontal.
+- Canción del reproductor a «Ojitos Lindos» de Magdalena Matthey.
+- El reproductor permanece oculto mientras la portada está a la vista.
+
 ## [0.3.1] - 2026-10-28
 
 ### Fixed
