@@ -3,11 +3,11 @@ import styles from './MusicPlayer.module.css'
 
 /**
  * El mp3 vive en public/ y se sirve tal cual.
- * Nombre exacto del archivo: public/audio/ojitos-lindos.mp3
+ * Nombre exacto del archivo: public/audio/eres-tu.mp3
  */
-const TRACK_SRC = `${import.meta.env.BASE_URL}audio/ojitos-lindos.mp3`
-const TRACK_TITLE = 'Ojitos Lindos'
-const TRACK_ARTIST = 'Magdalena Matthey'
+const TRACK_SRC = `${import.meta.env.BASE_URL}audio/eres-tu.mp3`
+const TRACK_TITLE = 'Eres tú'
+const TRACK_ARTIST = 'Carla Morrison'
 const TARGET_VOLUME = 0.5
 
 type Playback = 'idle' | 'playing' | 'paused' | 'missing'
