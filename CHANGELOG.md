@@ -2,6 +2,12 @@
 
 Todas las modificaciones importantes de este proyecto deben documentarse en este archivo.
 
+## [0.4.4] - 2026-10-28
+
+### Fixed
+
+- Desbloqueo de la reproducción en Android con gestos reales (`touchstart` / `pointerdown`), no con scroll.
+
 ## [0.4.3] - 2026-10-28
 
 ### Fixed
