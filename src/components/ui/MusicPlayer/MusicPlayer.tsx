@@ -49,26 +49,38 @@ function MusicPlayer({ hideWhileId = 'portada' }: MusicPlayerProps) {
     if (!audio) return
 
     let alive = true
+    let unlocked = false
     audio.volume = TARGET_VOLUME
 
     const setIfAlive = (next: Playback) => {
       if (alive) setPlayback(next)
     }
 
+    /*
+     * Autoplay:
+     * - iOS a veces trata el scroll como gesto y deja reproducir.
+     * - Android Chrome solo desbloquea con activación de usuario real
+     *   (touchstart / pointerdown / click / keydown). scroll, touchmove y
+     *   wheel NO cuentan — por eso ahí fallaba al “solo hacer scroll”.
+     * Escuchamos el finger-down (inicio del scroll) en capture para llamar
+     * a play() dentro de esa misma activación.
+     */
+    const unlockOpts: AddEventListenerOptions = { capture: true, passive: true }
+
     const detachUnlock = () => {
-      window.removeEventListener('pointerdown', onUnlock)
-      window.removeEventListener('keydown', onUnlock)
-      window.removeEventListener('wheel', onUnlock)
-      window.removeEventListener('scroll', onUnlock, true)
-      window.removeEventListener('touchmove', onUnlock)
+      window.removeEventListener('pointerdown', onUnlock, unlockOpts)
+      window.removeEventListener('touchstart', onUnlock, unlockOpts)
+      window.removeEventListener('click', onUnlock, unlockOpts)
+      window.removeEventListener('keydown', onUnlock, unlockOpts)
     }
 
     const start = () => {
-      if (pausedByUser.current || audio.error) return
+      if (pausedByUser.current || audio.error || unlocked) return
 
       const attempt = audio.play()
       void attempt
         ?.then(() => {
+          unlocked = true
           setIfAlive('playing')
           detachUnlock()
         })
@@ -93,12 +105,17 @@ function MusicPlayer({ hideWhileId = 'portada' }: MusicPlayerProps) {
 
     audio.addEventListener('error', onError)
     audio.addEventListener('timeupdate', onTimeUpdate)
-    window.addEventListener('pointerdown', onUnlock)
-    window.addEventListener('keydown', onUnlock)
-    window.addEventListener('wheel', onUnlock, { passive: true })
-    window.addEventListener('scroll', onUnlock, true)
-    window.addEventListener('touchmove', onUnlock, { passive: true })
-    start()
+    window.addEventListener('pointerdown', onUnlock, unlockOpts)
+    window.addEventListener('touchstart', onUnlock, unlockOpts)
+    window.addEventListener('click', onUnlock, unlockOpts)
+    window.addEventListener('keydown', onUnlock, unlockOpts)
+
+    /* Precarga para que el primer gesto no pierda la ventana de activación. */
+    try {
+      audio.load()
+    } catch {
+      /* ignore */
+    }
 
     return () => {
       alive = false
@@ -188,7 +205,7 @@ function MusicPlayer({ hideWhileId = 'portada' }: MusicPlayerProps) {
           </span>
         </span>
       </button>
-      <audio ref={audioRef} src={TRACK_SRC} preload="metadata" loop />
+      <audio ref={audioRef} src={TRACK_SRC} preload="auto" loop playsInline />
     </div>
   )
 }
